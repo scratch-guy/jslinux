@@ -15,9 +15,6 @@ bin etc lib linuxrc mnt proc
 run sys usr dev home lib64
 media opt root sbin tmp var
 
-markdown
-Copy code
-
 - **Persistent feel:** Commands respond instantly, giving the feeling of a running environment.
 
 ## 💡 Use Cases
@@ -37,6 +34,7 @@ When the prompt appears, try:
 ls
 cd /
 ls
+```
 Experiment, explore, and customize the environment however you like.
 
 🛠 Customization
