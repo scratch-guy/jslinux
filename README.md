@@ -6,8 +6,8 @@ No downloads, no setup — just open and start typing!
 ## ✨ Features
 
 - **Boot sequence:** Displays a startup log with helpful tips and messages.  
-- **Interactive shell:** Supports common commands such as `ls`, `cd`, and more.  
-- **Directory navigation:** Move between directories like `~`, `/`, `/usr`, `/bin`, etc.  
+- **Interactive shell:** Supports common commands such as ls, cd, and more.  
+- **Directory navigation:** Move between directories like ~, /, /usr, /bin, etc.  
 - **Live tab title:** The browser tab updates dynamically to match the current prompt.  
 - **Virtual file system:** Includes directories such as:
 
@@ -30,31 +30,27 @@ media opt root sbin tmp var
 Open the project in your browser and you’ll be greeted with the boot log.  
 When the prompt appears, try:
 
-```bash
 ls
 cd /
 ls
-```
+
 Experiment, explore, and customize the environment however you like.
 
-🛠 Customization
+## 🛠 Customization
+
 You can modify:
 
-Boot messages
-
-Initial files
-
-Default directory
-
-Shell behavior
-
-Command responses
-
-Title formatting
+- Boot messages  
+- Initial files  
+- Default directory  
+- Shell behavior  
+- Command responses  
+- Title formatting  
 
 Create your own experience, theme, or challenge!
 
-📜 License
+## 📜 License
+
 MIT License
 
 Copyright (c) 2025 scratch-guy
