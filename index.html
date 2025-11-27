@@ -71,6 +71,10 @@ function newPrompt() {
     const prompt = document.createElement("span");
     prompt.className = "prompt";
     prompt.textContent = `${user}@${hostname}:${cwd}$`;
+    updateTitle();
+    function updateTitle() {
+    document.title = `${user}@${hostname}:${cwd}$`;
+    }
 
     const input = document.createElement("input");
     input.className = "input";
@@ -118,7 +122,8 @@ dev  home  lib64  media  opt  root  sbin  tmp  var`
 }
 
 // Initialize terminal
-display("[    0.000] booting");
+display("Booting...");
+display("[  Useful Tip] use this for CTFs or other challanges!\nIt really makes me happy when i get to help others\nSweet Dreams\nAlso fun fact: its thanksgiving at the time of making");
 newPrompt();
 </script>
 
