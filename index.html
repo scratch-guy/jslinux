@@ -2,10 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>user@host:~$</title>
+    <title>JSLinux Emulator</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        #terminal {
+            white-space: pre;
+        }
+        input {
+            background: #000;
+            color: #0f0;
+            border: none;
+            outline: none;
+            font-family: monospace;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h1>Open your browser console to use the mini shell</h1>
-    <script src="engine.js"></script>
+    <div id="terminal"></div>
+    <input id="cmd" placeholder="Type command and press Enter" autofocus>
+
+    <script src="index.js"></script>
+    <script>
+        // Optional: attach input to your engine if index.js expects prompt()
+        const terminal = document.getElementById('terminal');
+        const cmdInput = document.getElementById('cmd');
+
+        // Override prompt to use input field
+        window.prompt = function(_text) {
+            return new Promise(resolve => {
+                terminal.innerHTML += _text; // show prompt
+                cmdInput.value = '';
+                cmdInput.focus();
+                cmdInput.onkeydown = function(e) {
+                    if (e.key === 'Enter') {
+                        const val = cmdInput.value;
+                        terminal.innerHTML += val + '\n';
+                        resolve(val);
+                    }
+                }
+            });
+        };
+
+        // If your index.js has main(), just call it
+        if (typeof main === 'function') main();
+    </script>
 </body>
 </html>
