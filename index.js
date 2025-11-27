@@ -23,3 +23,4 @@ function execute(cmd) {
     */
     else{console.log(`sh: ${cmd.split(" ")[0]}: command not found`);}
 }
+//i need to change the git repository in any way cause i need github pages to work lmao thats why im adding this
