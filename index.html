@@ -3,36 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>user@host:~$</title>
+<title>Fake Shell</title>
 <style>
   body {
     background: #1e1e1e;
     color: #c5c5c5;
     font-family: monospace;
+    margin: 0;
     padding: 20px;
   }
+
   #terminal {
+    background: #111;
     border: 1px solid #333;
-    padding: 10px;
     height: 400px;
+    padding: 10px;
     overflow-y: auto;
-    background-color: #111;
   }
-  #inputLine {
+
+  .line {
     display: flex;
     align-items: center;
+    margin-bottom: 2px;
   }
-  #inputLine span {
+
+  .prompt {
     margin-right: 5px;
   }
-  #cmdInput {
+
+  .input {
     background: transparent;
     border: none;
-    color: #c5c5c5;
-    flex: 1;
-    font-family: monospace;
-    font-size: 16px;
     outline: none;
+    color: #c5c5c5;
+    font-family: monospace;
+    flex: 1;
+    font-size: 16px;
+  }
+
+  .disabled {
+    color: #888;
   }
 </style>
 </head>
@@ -40,58 +50,76 @@
 
 <div id="terminal"></div>
 
-<div id="inputLine">
-  <span id="prompt"></span>
-  <input type="text" id="cmdInput" autocomplete="off" autofocus>
-</div>
-
 <script>
-let cwd, hostname, user;
-init();
-
 const terminal = document.getElementById('terminal');
-const cmdInput = document.getElementById('cmdInput');
-const promptSpan = document.getElementById('prompt');
 
-function init() {
-    cwd = '~';
-    hostname = "host";
-    user = "user";
-    updatePrompt();
+let cwd = "~";
+let hostname = "host";
+let user = "user";
+
+function display(text) {
+    const line = document.createElement("div");
+    line.textContent = text;
+    terminal.appendChild(line);
+    terminal.scrollTop = terminal.scrollHeight;
 }
 
-function updatePrompt() {
-    promptSpan.textContent = `${user}@${hostname}:${cwd}$`;
-}
+function newPrompt() {
+    const line = document.createElement("div");
+    line.className = "line";
 
-function display(message) {
-    const p = document.createElement('p');
-    p.textContent = message;
-    terminal.appendChild(p);
+    const prompt = document.createElement("span");
+    prompt.className = "prompt";
+    prompt.textContent = `${user}@${hostname}:${cwd}$`;
+
+    const input = document.createElement("input");
+    input.className = "input";
+    input.autocomplete = "off";
+    input.autofocus = true;
+    input.spellcheck = false;
+
+    line.appendChild(prompt);
+    line.appendChild(input);
+    terminal.appendChild(line);
+    input.focus();
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            const cmd = input.value.trim();
+            input.disabled = true;
+            input.classList.add("disabled");
+            execute(cmd);
+        }
+    });
+
     terminal.scrollTop = terminal.scrollHeight;
 }
 
 function execute(cmd) {
-    if(cmd==="cd .." && cwd==='~') cwd='/';
-    else if(cmd==="cd") cwd='~';
-    else if(cmd==="ls" && cwd==='~') display("file.txt");
-    else if(cmd==="ls" && cwd==='/') display("bin      etc      lib      linuxrc  mnt      proc     run      sys      usr\ndev      home     lib64    media    opt      root     sbin     tmp      var");
-    else if(cmd==="cd /") cwd='/';
-    else if(cmd==="ls /") display("bin      etc      lib      linuxrc  mnt      proc     run      sys      usr\ndev      home     lib64    media    opt      root     sbin     tmp      var");
-    else if(cmd==="exit"){ display("Exiting shell..."); cmdInput.disabled = true; }
+    if(cmd === "cd .." && cwd === "~") cwd = "/";
+    else if(cmd === "cd") cwd = "~";
+    else if(cmd === "ls" && cwd === "~") display("file.txt");
+    else if(cmd === "ls" && cwd === "/") display(
+`bin  etc  lib  linuxrc  mnt  proc  run  sys  usr
+dev  home  lib64  media  opt  root  sbin  tmp  var`
+    );
+    else if(cmd === "cd /") cwd = "/";
+    else if(cmd === "ls /") display(
+`bin  etc  lib  linuxrc  mnt  proc  run  sys  usr
+dev  home  lib64  media  opt  root  sbin  tmp  var`
+    );
+    else if(cmd === "exit") {
+        display("Exiting shell...");
+        return;
+    }
     else display(`sh: ${cmd.split(" ")[0]}: command not found`);
-    updatePrompt();
+
+    newPrompt();
 }
 
-// Handle input
-cmdInput.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter'){
-        const cmd = cmdInput.value.trim();
-        display(`${user}@${hostname}:${cwd}$ ${cmd}`);
-        cmdInput.value = '';
-        execute(cmd);
-    }
-});
+// Initialize terminal
+display("[    0.000] booting");
+newPrompt();
 </script>
 
 </body>
