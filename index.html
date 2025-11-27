@@ -113,7 +113,7 @@ dev  home  lib64  media  opt  root  sbin  tmp  var`
 dev  home  lib64  media  opt  root  sbin  tmp  var`
     );
     else if(cmd === "exit") {
-        display("Exiting shell...");
+        display("logout.");
         return;
     }
     else display(`sh: ${cmd.split(" ")[0]}: command not found`);
@@ -124,7 +124,7 @@ dev  home  lib64  media  opt  root  sbin  tmp  var`
 // Initialize terminal
 display("Booting...");
 display("[  Useful Tip] use this for CTFs or other challanges!\nIt really makes me happy when i get to help others\nSweet Dreams\nAlso fun fact: its thanksgiving at the time of making");
-newPrompt();
+newPrompt(); //your amazing
 </script>
 
 </body>
