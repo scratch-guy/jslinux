@@ -122,7 +122,7 @@ dev  home  lib64  media  opt  root  sbin  tmp  var`
         display("logout.");
         return;
     }
-    else display(`sh: ${cmd.split(" ")[0]}: command not found`);
+    else display(`sh: ${cmd.split(" ")[0]}: command not found or invalid arguments`);
 
     newPrompt();
 }
